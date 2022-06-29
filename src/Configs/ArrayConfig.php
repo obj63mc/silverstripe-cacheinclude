@@ -32,7 +32,7 @@ class ArrayConfig implements ConfigInterface
      * @param mixed $value
      * @throws \Exception
      */
-    public function offsetSet($id, $value)
+    public function offsetSet(mixed $id, mixed $value): void
     {
         throw new \Exception('Configs are immutable');
     }
@@ -42,7 +42,7 @@ class ArrayConfig implements ConfigInterface
      * @return mixed
      * @throws \InvalidArgumentException
      */
-    public function offsetGet($id)
+    public function offsetGet(mixed $id): mixed
     {
         if (!array_key_exists($id, $this->config)) {
             throw new \InvalidArgumentException(sprintf('Config "%s" is not defined.', $id));
@@ -55,7 +55,7 @@ class ArrayConfig implements ConfigInterface
      * @param mixed $id
      * @return bool
      */
-    public function offsetExists($id)
+    public function offsetExists(mixed $id) : bool
     {
         return isset($this->config[$id]);
     }
@@ -64,7 +64,8 @@ class ArrayConfig implements ConfigInterface
      * @param mixed $id
      * @throws \Exception
      */
-    public function offsetUnset($id)
+    #[\ReturnTypeWillChange]
+    public function offsetUnset(mixed $id): void
     {
         throw new \Exception('Configs are immutable');
     }
@@ -72,6 +73,7 @@ class ArrayConfig implements ConfigInterface
     /**
      * @return \ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->config);
